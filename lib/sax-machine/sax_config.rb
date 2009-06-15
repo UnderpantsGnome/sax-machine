@@ -5,6 +5,7 @@ module SAXMachine
   class SAXConfig
     def initialize
       @top_level_elements  = []
+      @complex_elements = []
       @collection_elements = []
     end
 
@@ -12,8 +13,16 @@ module SAXMachine
       @top_level_elements << ElementConfig.new(name, options)
     end
 
+    def add_complex_element(name, options)
+      @complex_elements << ElementConfig.new(name, options)
+    end
+
     def add_collection_element(name, options)
       @collection_elements << CollectionConfig.new(name, options)
+    end
+
+    def complex_config(name)
+      @complex_elements.detect { |ce| ce.name.to_s == name.to_s }
     end
 
     def collection_config(name)
@@ -33,6 +42,5 @@ module SAXMachine
         element_config.attrs_match?(attrs)
       end
     end
-
   end
 end
